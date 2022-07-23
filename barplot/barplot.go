@@ -104,6 +104,10 @@ func render(w io.Writer, keys []string, data []float64, opt *barPlot) {
 	// render title
 	if opt.title != "" {
 		titlePad := (opt.width - len(opt.title)) / 2 // compute title padding to display the title at the center
+		if titlePad < 0 {
+			// Just in case the title is too long
+			titlePad = 0
+		}
 		out(w, "%s%s  %s%s\n", mar, ss(maxKeyLen), ss(titlePad), unicodeplot.Bold(opt.title))
 	}
 
