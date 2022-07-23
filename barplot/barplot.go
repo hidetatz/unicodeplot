@@ -96,7 +96,7 @@ func render(w io.Writer, keys []string, data []float64, opt *barPlot) {
 			dLen = utf8.RuneCountInString(sData[i])
 		}
 	}
-	maxDataSymbols := opt.width - 1 - dLen // 1: space between symbols and data
+	maxDataSymbols := opt.width - 2 - dLen // 2: spaces for the padding of the data string
 
 	mar := ss(opt.margin)
 	border := unicodeplot.GetBorder(opt.border)
