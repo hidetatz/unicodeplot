@@ -121,7 +121,12 @@ func render(w io.Writer, keys []string, data []float64, opt *barPlot) {
 		key, val := keys[i], data[i]
 		keyPad := maxKeyLen - utf8.RuneCountInString(key)
 		symbolsLen := int(math.Floor(float64(maxDataSymbols) / maxData * val))
-		out(w, "%s%s%s %s%s %s%s\n", mar, ss(keyPad), key, border.L, unicodeplot.Colorize(rep(opt.symbol, symbolsLen), opt.color), sData[i], border.R)
+		dataPad := opt.width - symbolsLen - 1 - utf8.RuneCountInString(sData[i])
+		if opt.showBorder {
+			out(w, "%s%s%s %s%s %s%s%s\n", mar, ss(keyPad), key, border.L, unicodeplot.Colorize(rep(opt.symbol, symbolsLen), opt.color), sData[i], ss(dataPad), border.R)
+		} else {
+			out(w, "%s%s%s %s %s%s\n", mar, ss(keyPad), key, unicodeplot.Colorize(rep(opt.symbol, symbolsLen), opt.color), sData[i], ss(dataPad))
+		}
 	}
 
 	// render bottom border
